@@ -50,7 +50,7 @@ define postgresql::extension(
     true    => "echo \"${drop_query}\" | psql ${database}",
     default => "echo \"${create_query}\" | psql ${database}",
   }
-  $cmd = "echo \\\\dx|psql|tail -n +4|awk '{print \$1}'|grep '^${extensionname}$'"
+  $cmd = "echo \\\\dx|psql ${database}|tail -n +4|awk '{print \$1}'|grep '^${extensionname}$'"
   $db_unless = $bool_absent ? {
     true  => undef,
     false => $cmd,
