@@ -14,6 +14,46 @@ This module requires functions provided by the Example42 Puppi module (you need 
 
 For detailed info about the logic and usage patterns of Example42 modules check the DOCS directory on Example42 main modules set.
 
+== USAGE - Manage role
+
+* create role named 'root'
+
+        postgresql::role { 'root': }
+
+* create a role named 'root' with 'password' as password.
+
+        postgresql::role { 'root':
+          password => 'password',
+        }
+
+* remove a role named 'root'
+
+        postgresql::db { 'root':
+          absent => true,
+        }
+
+* See manifests/role.pp for more options
+
+== USAGE - Manage database
+
+* create database named "my_bd" owned by "my_bd"
+
+        postgresql::db { 'my_bd': }
+
+* create database named "my_bd" owned by "root"
+
+        postgresql::db { 'my_bd':
+          owner => 'root',
+        }
+
+* remove a database named 'my_bd'
+
+        postgresql::db { 'my_bd':
+          absent => true,
+        }
+
+* See manifests/db.pp for more options
+
 == USAGE - Basic management
 
 * Install postgresql with default settings
@@ -46,10 +86,10 @@ For detailed info about the logic and usage patterns of Example42 modules check 
 
 
 == USAGE - Overrides and Customizations
-* Use custom sources for main config file 
+* Use custom sources for main config file
 
         class { 'postgresql':
-          source => [ "puppet:///modules/lab42/postgresql/postgresql.conf-${hostname}" , "puppet:///modules/lab42/postgresql/postgresql.conf" ], 
+          source => [ "puppet:///modules/lab42/postgresql/postgresql.conf-${hostname}" , "puppet:///modules/lab42/postgresql/postgresql.conf" ],
         }
 
 
@@ -60,7 +100,7 @@ For detailed info about the logic and usage patterns of Example42 modules check 
           source_dir_purge => false, # Set to true to purge any existing file not present in $source_dir
         }
 
-* Use custom template for main config file. Note that template and source arguments are alternative. 
+* Use custom template for main config file. Note that template and source arguments are alternative.
 
         class { 'postgresql':
           template => 'example42/postgresql/postgresql.conf.erb',
@@ -73,18 +113,18 @@ For detailed info about the logic and usage patterns of Example42 modules check 
         }
 
 
-== USAGE - Example42 extensions management 
+== USAGE - Example42 extensions management
 * Activate puppi (recommended, but disabled by default)
 
         class { 'postgresql':
           puppi    => true,
         }
 
-* Activate puppi and use a custom puppi_helper template (to be provided separately with a puppi::helper define ) to customize the output of puppi commands 
+* Activate puppi and use a custom puppi_helper template (to be provided separately with a puppi::helper define ) to customize the output of puppi commands
 
         class { 'postgresql':
           puppi        => true,
-          puppi_helper => 'myhelper', 
+          puppi_helper => 'myhelper',
         }
 
 * Activate automatic monitoring (recommended, but disabled by default). This option requires the usage of Example42 monitor and relevant monitor tools modules
@@ -96,7 +136,7 @@ For detailed info about the logic and usage patterns of Example42 modules check 
 
 * Activate automatic firewalling. This option requires the usage of Example42 firewall and relevant firewall tools modules
 
-        class { 'postgresql':       
+        class { 'postgresql':
           firewall      => true,
           firewall_tool => 'iptables',
           firewall_src  => '10.42.0.0/24',
