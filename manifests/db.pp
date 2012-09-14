@@ -118,6 +118,13 @@ define postgresql::db(
     true  => $cmd,
     false => undef,
   }
+  $db_require = $bool_absent ? {
+    true  => Package['postgresql'],
+    false => [
+      Package['postgresql'],
+      Postgresql::Role[$owner]
+    ],
+  }
 
   exec { "postgres-manage-database-${name}":
     user    => $postgresql::process_user,
@@ -125,6 +132,6 @@ define postgresql::db(
     unless  => $db_unless,
     onlyif  => $db_onlyif,
     command => $db_command,
-    require => Postgresql::Role[$owner],
+    require => $db_require,
   }
 }

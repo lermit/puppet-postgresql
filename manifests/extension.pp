@@ -61,8 +61,11 @@ define postgresql::extension(
   }
 
   $manage_require = $database ? {
-    ''      => undef,
-    default => Postgresql::Db[$database],
+    ''      => Package['postgresql'],
+    default => [
+      Postgresql::Db[$database],
+      Package['postgresql']
+    ],
   }
 
   exec { "postgres-manage-extension-${name}":
