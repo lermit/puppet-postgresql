@@ -18,6 +18,7 @@ describe 'postgresql::db', :type => :define do
     it { should contain_exec('postgres-manage-database-my_db').without_onlyif() }
     it { should contain_exec('postgres-manage-database-my_db').with_user('postgres') }
     it { should contain_exec('postgres-manage-database-my_db').with_require(/Postgresql::Role/) }
+    it { should contain_exec('postgres-manage-database-my_db').with_require(/Package/) }
   end
 
   describe 'Test postgresql::db - delete database' do
@@ -28,5 +29,7 @@ describe 'postgresql::db', :type => :define do
     end
     it { should contain_exec('postgres-manage-database-my_db').without_unless() }
     it { should contain_exec('postgres-manage-database-my_db').with_user('postgres') }
+    it { should_not contain_exec('postgres-manage-database-my_db').with_require(/Postgresql::Role/) }
+    it { should contain_exec('postgres-manage-database-my_db').with_require(/Package/) }
   end
 end

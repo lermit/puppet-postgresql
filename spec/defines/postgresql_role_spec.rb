@@ -13,6 +13,7 @@ describe 'postgresql::role', :type => :define do
     end
     it { should contain_exec('postgres-manage-role-my_role').without_onlyif() }
     it { should contain_exec('postgres-manage-role-my_role').with_user('postgres') }
+    it { should contain_exec('postgres-manage-role-my_role').with_require(/Package/) }
   end
 
   describe 'Test postgresql::role - delete role' do
@@ -23,5 +24,6 @@ describe 'postgresql::role', :type => :define do
     end
     it { should contain_exec('postgres-manage-role-my_role').without_unless() }
     it { should contain_exec('postgres-manage-role-my_role').with_user('postgres') }
+    it { should contain_exec('postgres-manage-role-my_role').with_require(/Package/) }
   end
 end

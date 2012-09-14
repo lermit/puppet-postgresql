@@ -107,6 +107,7 @@ define postgresql::role(
     true  => $cmd,
     false => undef,
   }
+  $db_require = Package['postgresql']
 
   exec { "postgres-manage-role-${name}":
     user    => $postgresql::process_user,
@@ -114,5 +115,6 @@ define postgresql::role(
     unless  => $db_unless,
     onlyif  => $db_onlyif,
     command => $db_command,
+    require => $db_require,
   }
 }
