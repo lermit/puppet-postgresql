@@ -87,11 +87,11 @@ define postgresql::db(
   }
   $o_collate = $lc_collate ? {
     ''      => '',
-    default => "LC_COLLATE $lc_collate",
+    default => "LC_COLLATE '$lc_collate'",
   }
   $o_ctype= $lc_ctype ? {
     ''      => '',
-    default => "LC_CTYPE $lc_ctype",
+    default => "LC_CTYPE '$lc_ctype'",
   }
   $o_tablespace = $tablespace ? {
     ''      => '',
