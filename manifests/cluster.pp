@@ -27,6 +27,8 @@ define postgresql::cluster(
     ''      => '',
     default => "--locale=$locale",
   }
+  $options = "$o_owner $o_group $o_locale"
+  $full_create_cmd = "$create_cmd $options"
 
   $drop_cmd = "pg_dropcluster --stop $version $cluster_name"
 
@@ -34,7 +36,7 @@ define postgresql::cluster(
 
   $manage_cmd = $bool_absent ? {
     true  => $drop_cmd,
-    false => $create_cmd,
+    false => $full_create_cmd,
   }
 
   $manage_onlyif = $bool_absent ? {
