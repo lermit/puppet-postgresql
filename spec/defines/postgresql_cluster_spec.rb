@@ -9,7 +9,6 @@ describe 'postgresql::cluster', :type => :define do
   describe 'Test postgresql::cluster should create a cluster' do
     it { should contain_exec('postgres-manage-cluster-my_cluster').with_command(/pg_createcluster/) }
     it { should contain_exec('postgres-manage-cluster-my_cluster').without_onlyif() }
-    it { should contain_exec('postgres-manage-cluster-my_cluster').with_user('postgres') }
     it { should contain_exec('postgres-manage-cluster-my_cluster').with_require(/Package/) }
     it { should contain_exec('postgres-manage-cluster-my_cluster').with_notify(/Service/) }
   end
@@ -33,7 +32,6 @@ describe 'postgresql::cluster', :type => :define do
     let(:params) { { :absent => true } }
     it { should contain_exec('postgres-manage-cluster-my_cluster').with_command(/pg_dropcluster/) }
     it { should contain_exec('postgres-manage-cluster-my_cluster').without_unless() }
-    it { should contain_exec('postgres-manage-cluster-my_cluster').with_user('postgres') }
     it { should contain_exec('postgres-manage-cluster-my_cluster').with_require(/Package/) }
   end
 end
