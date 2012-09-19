@@ -54,7 +54,6 @@ define postgresql::cluster(
     path    => '/bin:/usr/bin:/sbin:/usr/sbin',
     onlyif  => $manage_onlyif,
     unless  => $manage_unless,
-    user    => $postgresql::process_user,
     require => Package['postgresql'],
     notify  => $postgresql::manage_service_autorestart,
   }
