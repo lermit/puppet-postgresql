@@ -97,7 +97,7 @@ class postgresql::params {
   }
 
   $data_dir = $::operatingsystem ? {
-    /(?i:Debian|Ubuntu|Mint)/ => '/var/lib/postgresql/8.4/main',
+    /(?i:Debian|Ubuntu|Mint)/ => '/var/lib/postgresql/8.4',
     default                   => '/var/lib/pgsql',
   }
 
