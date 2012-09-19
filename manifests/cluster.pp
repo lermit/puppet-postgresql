@@ -56,5 +56,6 @@ define postgresql::cluster(
     unless  => $manage_unless,
     user    => $postgresql::process_user,
     require => Package['postgresql'],
+    notify  => $postgresql::manage_service_autorestart,
   }
 }

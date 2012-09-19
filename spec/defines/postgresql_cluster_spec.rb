@@ -11,6 +11,7 @@ describe 'postgresql::cluster', :type => :define do
     it { should contain_exec('postgres-manage-cluster-my_cluster').without_onlyif() }
     it { should contain_exec('postgres-manage-cluster-my_cluster').with_user('postgres') }
     it { should contain_exec('postgres-manage-cluster-my_cluster').with_require(/Package/) }
+    it { should contain_exec('postgres-manage-cluster-my_cluster').with_notify(/Service/) }
   end
 
   describe 'Test postgresql::cluster - create cluster with locale' do
