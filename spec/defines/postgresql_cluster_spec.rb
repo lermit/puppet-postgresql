@@ -7,11 +7,25 @@ describe 'postgresql::cluster', :type => :define do
   let(:facts) { { :arch => 'i386', :operatingsystem => 'Debian' } }
 
   describe 'Test postgresql::cluster should create a cluster' do
-    let(:params) { { :owner => 'theowner' } }
     it { should contain_exec('postgres-manage-cluster-my_cluster').with_command(/pg_createcluster/) }
     it { should contain_exec('postgres-manage-cluster-my_cluster').without_onlyif() }
     it { should contain_exec('postgres-manage-cluster-my_cluster').with_user('postgres') }
     it { should contain_exec('postgres-manage-cluster-my_cluster').with_require(/Package/) }
+  end
+
+  describe 'Test postgresql::cluster - create cluster with locale' do
+    let(:params) { { :locale => 'my_LO.UTF-8' } }
+    it { should contain_exec('postgres-manage-cluster-my_cluster').with_command(/my_LO.UTF-8/) }
+  end
+
+  describe 'Test postgresql::cluster - create cluster with owner' do
+    let(:params) { { :owner => 'myowner' } }
+    it { should contain_exec('postgres-manage-cluster-my_cluster').with_command(/myowner/) }
+  end
+
+  describe 'Test postgresql::cluster - create cluster with group' do
+    let(:params) { { :group => 'mygroup' } }
+    it { should contain_exec('postgres-manage-cluster-my_cluster').with_command(/mygroup/) }
   end
 
   describe 'Test postgresql::cluster - delete cluster' do
